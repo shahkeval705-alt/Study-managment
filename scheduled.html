@@ -1,0 +1,1588 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0083)file:///C:/Users/shah%20keval/Downloads/Sem_3_HQ___Your_Study_Command_Center_4.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sem 3 HQ — Your Study Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="file:///C:/Users/shah%20keval/Downloads/Sem%203%20HQ%20%E2%80%94%20Your%20Study%20Command%20Center_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f0b1e;
+    --bg-elev:#150f28;
+    --card:#1c1533;
+    --card-hi:#241b3f;
+    --line:rgba(255,255,255,0.08);
+    --text:#f3f0ff;
+    --text-dim:#a89fc9;
+    --text-faint:#6e6690;
+    --violet:#8b5cff;
+    --violet-soft:rgba(139,92,255,0.18);
+    --pink:#ff5fa2;
+    --lime:#c6ff3d;
+
+    --c-java:#ff9f45;
+    --c-os:#4fc3f7;
+    --c-eng:#ff6b9d;
+    --c-iks:#ffc857;
+    --c-ecom:#34d399;
+    --c-anim:#b98cff;
+
+    --radius:18px;
+    --radius-sm:12px;
+    --shadow:0 10px 30px rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    background:
+      radial-gradient(900px 500px at 85% -10%, rgba(139,92,255,0.20), transparent 60%),
+      radial-gradient(700px 500px at -10% 20%, rgba(255,95,162,0.14), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--violet); color:#fff;}
+  ::-webkit-scrollbar{width:8px; height:8px;}
+  ::-webkit-scrollbar-thumb{background:var(--card-hi); border-radius:8px;}
+
+  h1,h2,h3,.display{font-family:'Space Grotesk', sans-serif;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  button{font-family:inherit; cursor:pointer;}
+  input,select,textarea{font-family:inherit;}
+
+  a{color:inherit;}
+
+  /* ---------- layout ---------- */
+  .app{
+    display:grid;
+    grid-template-columns:96px 1fr;
+    min-height:100vh;
+  }
+  @media (max-width:820px){
+    .app{grid-template-columns:1fr;}
+  }
+
+  /* ---------- sidebar ---------- */
+  .sidebar{
+    background:var(--bg-elev);
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:22px 0;
+    gap:6px;
+    position:sticky;
+    top:0;
+    height:100vh;
+  }
+  @media (max-width:820px){ .sidebar{display:none;} }
+
+  .logo-mark{
+    width:44px; height:44px; border-radius:14px;
+    background:linear-gradient(135deg, var(--violet), var(--pink));
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:18px; margin-bottom:28px;
+    box-shadow:0 6px 18px rgba(139,92,255,0.4);
+  }
+
+  .nav-btn{
+    width:60px; height:60px;
+    border-radius:16px;
+    border:1px solid transparent;
+    background:transparent;
+    color:var(--text-dim);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:4px;
+    font-size:20px;
+    transition:background .18s ease, color .18s ease, transform .18s ease;
+  }
+  .nav-btn span.label{font-size:10px; font-weight:600; letter-spacing:.02em;}
+  .nav-btn:hover{background:var(--card); color:var(--text); transform:translateY(-1px);}
+  .nav-btn.active{
+    background:var(--violet-soft);
+    color:#fff;
+    border-color:rgba(139,92,255,0.4);
+  }
+
+  .sidebar-bottom{margin-top:auto; color:var(--text-faint); font-size:10px; text-align:center; padding:0 8px;}
+
+  /* ---------- bottom nav (mobile) ---------- */
+  .bottom-nav{
+    display:none;
+    position:fixed; left:0; right:0; bottom:0;
+    background:rgba(21,15,40,0.92);
+    backdrop-filter:blur(14px);
+    border-top:1px solid var(--line);
+    padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+    z-index:50;
+    justify-content:space-around;
+  }
+  @media (max-width:820px){ .bottom-nav{display:flex;} }
+  .bottom-nav .nav-btn{width:auto; height:auto; padding:6px 10px; border-radius:12px;}
+
+  /* ---------- main ---------- */
+  main{padding:28px 32px 100px; max-width:1180px; width:100%;}
+  @media (max-width:820px){ main{padding:20px 16px 90px;} }
+
+  header.top{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    margin-bottom:26px; flex-wrap:wrap; gap:16px;
+  }
+  .greet-eyebrow{
+    color:var(--pink); font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .greet-title{font-size:clamp(24px,3.4vw,34px); font-weight:700; letter-spacing:-0.01em;}
+  .greet-sub{color:var(--text-dim); font-size:14px; margin-top:4px;}
+
+  .streak-chip{
+    display:flex; align-items:center; gap:10px;
+    background:linear-gradient(135deg, rgba(255,159,69,0.18), rgba(255,95,162,0.12));
+    border:1px solid rgba(255,159,69,0.35);
+    padding:10px 16px; border-radius:999px;
+  }
+  .streak-num{font-family:'Space Grotesk'; font-weight:700; font-size:20px;}
+  .streak-lbl{font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.08em;}
+
+  section{display:none; animation:rise .45s ease both;}
+  section.active{display:block;}
+  @keyframes rise{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+
+  /* ---------- Today tab ---------- */
+  .today-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:20px;}
+  @media (max-width:920px){ .today-grid{grid-template-columns:1fr;} }
+
+  .section-label{
+    font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--text-faint); margin-bottom:12px;
+  }
+
+  .block-row{
+    display:flex; align-items:center; gap:12px;
+    padding:12px 14px; border-radius:14px;
+    background:var(--bg-elev); border:1px solid var(--line);
+    margin-bottom:10px;
+  }
+  .block-time{font-family:'JetBrains Mono'; font-size:12px; color:var(--text-dim); width:64px; flex-shrink:0;}
+  .block-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
+  .block-subj{font-weight:600; font-size:14px;}
+  .block-note{font-size:12px; color:var(--text-dim); margin-left:auto; text-align:right;}
+  .empty-note{color:var(--text-faint); font-size:13px; padding:14px 4px;}
+
+  .todo-item{
+    display:flex; align-items:center; gap:10px;
+    padding:10px 12px; border-radius:12px;
+    border:1px solid var(--line);
+    margin-bottom:8px; background:var(--bg-elev);
+  }
+  .todo-check{
+    width:20px; height:20px; border-radius:7px; border:2px solid var(--text-faint);
+    flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    font-size:12px; transition:all .15s ease;
+  }
+  .todo-check.done{background:var(--lime); border-color:var(--lime); color:#0f0b1e;}
+  .todo-text{font-size:13.5px; flex:1;}
+  .todo-text.done{color:var(--text-faint); text-decoration:line-through;}
+  .todo-del{color:var(--text-faint); font-size:16px; padding:2px 6px; background:none; border:none;}
+  .todo-del:hover{color:var(--pink);}
+
+  .add-row{display:flex; gap:8px; margin-top:12px;}
+  .add-row input, .add-row select{
+    background:var(--bg-elev); border:1px solid var(--line); color:var(--text);
+    padding:10px 12px; border-radius:10px; font-size:13px;
+  }
+  .add-row input{flex:1;}
+  .btn{
+    background:linear-gradient(135deg, var(--violet), var(--pink));
+    color:#fff; border:none; padding:10px 16px; border-radius:10px;
+    font-weight:600; font-size:13px; transition:transform .15s ease, box-shadow .15s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-1px); box-shadow:0 8px 20px rgba(139,92,255,0.35);}
+  .btn.ghost{background:var(--bg-elev); border:1px solid var(--line); color:var(--text);}
+
+  /* ---------- Subjects tab ---------- */
+  .constellation{
+    display:flex; gap:22px; overflow-x:auto; padding:6px 2px 18px;
+    margin-bottom:8px;
+  }
+  .ring-item{display:flex; flex-direction:column; align-items:center; gap:8px; flex-shrink:0;}
+  .ring-label{font-size:11px; color:var(--text-dim); font-weight:600;}
+  .ring-pct{font-family:'JetBrains Mono'; font-size:11px; color:var(--text-faint);}
+
+  .subj-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:16px;}
+  .subj-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px; cursor:pointer; transition:border-color .15s ease, transform .15s ease;
+  }
+  .subj-card:hover{transform:translateY(-2px);}
+  .subj-top{display:flex; align-items:center; gap:12px; margin-bottom:10px;}
+  .subj-icon{
+    width:44px; height:44px; border-radius:13px; display:flex; align-items:center; justify-content:center;
+    font-size:20px; flex-shrink:0;
+  }
+  .subj-name{font-weight:700; font-size:15.5px;}
+  .subj-code{font-size:11px; color:var(--text-faint); font-family:'JetBrains Mono';}
+  .subj-bar-track{height:6px; border-radius:6px; background:var(--bg-elev); overflow:hidden; margin-top:12px;}
+  .subj-bar-fill{height:100%; border-radius:6px; transition:width .4s ease;}
+  .subj-meta{display:flex; justify-content:space-between; font-size:11px; color:var(--text-dim); margin-top:8px;}
+
+  .subj-detail{margin-top:22px; display:none;}
+  .subj-detail.open{display:block;}
+  .unit-block{
+    background:var(--bg-elev); border:1px solid var(--line); border-radius:14px;
+    padding:16px 18px; margin-bottom:12px;
+  }
+  .unit-title{font-weight:700; font-size:14px; margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .topic-row{display:flex; align-items:center; gap:10px; padding:6px 0; font-size:13px;}
+  .topic-row .todo-check{width:18px; height:18px;}
+  .topic-row.done .topic-text{color:var(--text-faint); text-decoration:line-through;}
+  .topic-text{flex:1;}
+  .ans-toggle{
+    background:none; border:1px solid var(--line); color:var(--text-faint);
+    font-size:10.5px; padding:4px 9px; border-radius:8px; flex-shrink:0;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .ans-toggle:hover, .ans-toggle.open{color:var(--lime); border-color:var(--lime);}
+  .ans-panel{
+    display:none; background:var(--bg); border-left:2px solid var(--lime);
+    margin:2px 0 10px 28px; padding:9px 13px; border-radius:0 10px 10px 0;
+    font-size:12.5px; color:var(--text-dim); line-height:1.55;
+  }
+  .ans-panel.open{display:block;}
+
+  .close-detail{margin-top:6px;}
+
+  /* ---------- Planner tab ---------- */
+  .week-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:12px;}
+  @media (max-width:920px){ .week-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));} }
+  .day-col{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; min-height:160px;}
+  .day-head{font-weight:700; font-size:13px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;}
+  .day-add{
+    background:var(--bg-elev); border:1px dashed var(--line); color:var(--text-faint);
+    width:100%; padding:8px; border-radius:10px; font-size:12px; margin-top:8px;
+  }
+  .day-add:hover{color:var(--text); border-color:var(--violet);}
+  .plan-item{
+    background:var(--bg-elev); border-radius:10px; padding:8px 10px; margin-bottom:8px;
+    border-left:3px solid var(--violet); font-size:12px; position:relative;
+  }
+  .plan-item .pi-time{font-family:'JetBrains Mono'; font-size:10.5px; color:var(--text-dim); display:block; margin-bottom:2px;}
+  .plan-item .pi-del{position:absolute; top:6px; right:8px; background:none; border:none; color:var(--text-faint); font-size:13px;}
+  .plan-item .pi-del:hover{color:var(--pink);}
+
+  /* modal */
+  .modal-backdrop{
+    position:fixed; inset:0; background:rgba(10,7,20,0.65); backdrop-filter:blur(4px);
+    display:none; align-items:center; justify-content:center; z-index:100; padding:20px;
+  }
+  .modal-backdrop.open{display:flex;}
+  .modal{
+    background:var(--card-hi); border:1px solid var(--line); border-radius:18px;
+    padding:22px; width:100%; max-width:360px;
+  }
+  .modal h3{font-size:16px; margin-bottom:14px;}
+  .modal label{font-size:11px; color:var(--text-dim); display:block; margin:10px 0 5px; text-transform:uppercase; letter-spacing:.06em;}
+  .modal input, .modal select{width:100%; background:var(--bg-elev); border:1px solid var(--line); color:var(--text); padding:10px 12px; border-radius:10px; font-size:13px;}
+  .modal-actions{display:flex; gap:10px; margin-top:18px;}
+  .modal-actions .btn{flex:1;}
+
+  /* ---------- Career tab ---------- */
+  .career-hero{
+    background:linear-gradient(135deg, rgba(139,92,255,0.16), rgba(255,95,162,0.10));
+    border:1px solid rgba(139,92,255,0.3);
+    border-radius:var(--radius); padding:24px; margin-bottom:20px;
+  }
+  .career-hero h2{font-size:clamp(20px,2.6vw,26px); margin-bottom:8px;}
+  .career-hero p{color:var(--text-dim); font-size:14px; max-width:640px; line-height:1.6;}
+
+  .career-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px;}
+  .career-card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:18px;}
+  .career-card .subj-top{margin-bottom:8px;}
+  .career-card ul{list-style:none; margin-top:10px; display:flex; flex-direction:column; gap:8px;}
+  .career-card li{font-size:12.5px; color:var(--text-dim); display:flex; gap:8px; align-items:flex-start; line-height:1.5;}
+  .career-card li:before{content:"→"; color:var(--lime); flex-shrink:0;}
+
+  .goals-box{margin-top:22px;}
+
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--card-hi); border:1px solid var(--line); padding:10px 18px; border-radius:12px;
+    font-size:13px; opacity:0; pointer-events:none; transition:all .25s ease; z-index:200;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media (max-width:820px){
+    .bottom-nav .label{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <nav class="sidebar" id="sidebarNav"><div class="logo-mark">S3</div><button class="nav-btn active" data-tab="today"><span>🏠</span><span class="label">Today</span></button><button class="nav-btn" data-tab="subjects"><span>📚</span><span class="label">Subjects</span></button><button class="nav-btn" data-tab="planner"><span>🗓️</span><span class="label">Planner</span></button><button class="nav-btn" data-tab="career"><span>🚀</span><span class="label">Career</span></button><div class="sidebar-bottom">built for sem 3</div></nav>
+
+  <main>
+    <header class="top">
+      <div>
+        <div class="greet-eyebrow" id="dateLine">Tuesday, August 11</div>
+        <div class="greet-title" id="greetTitle">Good afternoon 👋</div>
+        <div class="greet-sub">BCA Sem 3 · 6 subjects · one command center</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button class="btn ghost" id="notifBtn" title="Get browser reminders for tasks &amp; schedule blocks">🔔 Reminders: Off</button>
+        <div class="streak-chip">
+          <span style="font-size:20px;">🔥</span>
+          <div>
+            <div class="streak-num" id="streakNum">1</div>
+            <div class="streak-lbl">day streak</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- TODAY -->
+    <section id="tab-today" class="">
+      <div class="today-grid">
+        <div class="card">
+          <div class="section-label">Today's schedule</div>
+          <div id="todaySchedule"><div class="block-row">
+        <span class="block-time">5:00 PM</span>
+        <span class="block-dot" style="background:var(--c-eng)"></span>
+        <span class="block-subj">English (AEC)</span>
+        <span class="block-note">Reading + grammar</span></div><div class="block-row">
+        <span class="block-time">6:30 PM</span>
+        <span class="block-dot" style="background:var(--c-ecom)"></span>
+        <span class="block-subj">E-Commerce Tech</span>
+        <span class="block-note">Unit topics</span></div></div>
+        </div>
+        <div class="card">
+          <div class="section-label">Quick tasks</div>
+          <div id="todoList"><div class="empty-note">No tasks yet. What are you tackling today?</div></div>
+          <div class="add-row">
+            <input id="todoInput" placeholder="Add a task…" maxlength="80">
+            <input id="todoRemind" type="datetime-local" title="Optional reminder time" style="max-width:170px;">
+            <button class="btn" id="todoAddBtn">Add</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUBJECTS -->
+    <section id="tab-subjects" class="">
+      <div class="section-label">Syllabus progress</div>
+      <div class="constellation" id="constellation"><div class="ring-item">
+      <svg width="64" height="64" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,0.08)" stroke-width="6" fill="none"></circle>
+        <circle cx="32" cy="32" r="26" stroke="var(--c-java)" stroke-width="6" fill="none" stroke-dasharray="163.36281798666926" stroke-dashoffset="150.2937925477357" stroke-linecap="round" transform="rotate(-90 32 32)" style="transition:stroke-dashoffset .5s ease"></circle>
+        <text x="32" y="37" text-anchor="middle" font-size="15" fill="white">☕</text>
+      </svg>
+      <div class="ring-label">Java</div>
+      <div class="ring-pct">8%</div></div><div class="ring-item">
+      <svg width="64" height="64" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,0.08)" stroke-width="6" fill="none"></circle>
+        <circle cx="32" cy="32" r="26" stroke="var(--c-os)" stroke-width="6" fill="none" stroke-dasharray="163.36281798666926" stroke-dashoffset="163.36281798666926" stroke-linecap="round" transform="rotate(-90 32 32)" style="transition:stroke-dashoffset .5s ease"></circle>
+        <text x="32" y="37" text-anchor="middle" font-size="15" fill="white">🖥️</text>
+      </svg>
+      <div class="ring-label">Operating</div>
+      <div class="ring-pct">0%</div></div><div class="ring-item">
+      <svg width="64" height="64" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,0.08)" stroke-width="6" fill="none"></circle>
+        <circle cx="32" cy="32" r="26" stroke="var(--c-eng)" stroke-width="6" fill="none" stroke-dasharray="163.36281798666926" stroke-dashoffset="163.36281798666926" stroke-linecap="round" transform="rotate(-90 32 32)" style="transition:stroke-dashoffset .5s ease"></circle>
+        <text x="32" y="37" text-anchor="middle" font-size="15" fill="white">✍️</text>
+      </svg>
+      <div class="ring-label">English</div>
+      <div class="ring-pct">0%</div></div><div class="ring-item">
+      <svg width="64" height="64" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,0.08)" stroke-width="6" fill="none"></circle>
+        <circle cx="32" cy="32" r="26" stroke="var(--c-iks)" stroke-width="6" fill="none" stroke-dasharray="163.36281798666926" stroke-dashoffset="163.36281798666926" stroke-linecap="round" transform="rotate(-90 32 32)" style="transition:stroke-dashoffset .5s ease"></circle>
+        <text x="32" y="37" text-anchor="middle" font-size="15" fill="white">🕉️</text>
+      </svg>
+      <div class="ring-label">Indian</div>
+      <div class="ring-pct">0%</div></div><div class="ring-item">
+      <svg width="64" height="64" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,0.08)" stroke-width="6" fill="none"></circle>
+        <circle cx="32" cy="32" r="26" stroke="var(--c-ecom)" stroke-width="6" fill="none" stroke-dasharray="163.36281798666926" stroke-dashoffset="163.36281798666926" stroke-linecap="round" transform="rotate(-90 32 32)" style="transition:stroke-dashoffset .5s ease"></circle>
+        <text x="32" y="37" text-anchor="middle" font-size="15" fill="white">🛒</text>
+      </svg>
+      <div class="ring-label">E-Commerce</div>
+      <div class="ring-pct">0%</div></div><div class="ring-item">
+      <svg width="64" height="64" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,0.08)" stroke-width="6" fill="none"></circle>
+        <circle cx="32" cy="32" r="26" stroke="var(--c-anim)" stroke-width="6" fill="none" stroke-dasharray="163.36281798666926" stroke-dashoffset="153.56104890746911" stroke-linecap="round" transform="rotate(-90 32 32)" style="transition:stroke-dashoffset .5s ease"></circle>
+        <text x="32" y="37" text-anchor="middle" font-size="15" fill="white">🎬</text>
+      </svg>
+      <div class="ring-label">Multimedia</div>
+      <div class="ring-pct">6%</div></div></div>
+      <div class="subj-grid" id="subjGrid"><div class="subj-card" style="border-color: transparent;">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-java)22; color:var(--c-java);">☕</div>
+        <div>
+          <div class="subj-name">Java Programming</div>
+          <div class="subj-code">OOP · Credits 4</div>
+        </div>
+      </div>
+      <div class="subj-bar-track"><div class="subj-bar-fill" style="width:8%; background:var(--c-java);"></div></div>
+      <div class="subj-meta"><span>4 units</span><span>8% complete</span></div></div><div class="subj-card" style="border-color: transparent;">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-os)22; color:var(--c-os);">🖥️</div>
+        <div>
+          <div class="subj-name">Operating Systems</div>
+          <div class="subj-code">OS Concepts · Credits 4</div>
+        </div>
+      </div>
+      <div class="subj-bar-track"><div class="subj-bar-fill" style="width:0%; background:var(--c-os);"></div></div>
+      <div class="subj-meta"><span>4 units</span><span>0% complete</span></div></div><div class="subj-card" style="border-color: transparent;">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-eng)22; color:var(--c-eng);">✍️</div>
+        <div>
+          <div class="subj-name">English (AEC)</div>
+          <div class="subj-code">Ability Enhancement</div>
+        </div>
+      </div>
+      <div class="subj-bar-track"><div class="subj-bar-fill" style="width:0%; background:var(--c-eng);"></div></div>
+      <div class="subj-meta"><span>2 units</span><span>0% complete</span></div></div><div class="subj-card" style="border-color: transparent;">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-iks)22; color:var(--c-iks);">🕉️</div>
+        <div>
+          <div class="subj-name">Indian Knowledge System</div>
+          <div class="subj-code">IKS · Credits 2</div>
+        </div>
+      </div>
+      <div class="subj-bar-track"><div class="subj-bar-fill" style="width:0%; background:var(--c-iks);"></div></div>
+      <div class="subj-meta"><span>2 units</span><span>0% complete</span></div></div><div class="subj-card" style="border-color: transparent;">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-ecom)22; color:var(--c-ecom);">🛒</div>
+        <div>
+          <div class="subj-name">E-Commerce Tech</div>
+          <div class="subj-code">IDC · Credits 2</div>
+        </div>
+      </div>
+      <div class="subj-bar-track"><div class="subj-bar-fill" style="width:0%; background:var(--c-ecom);"></div></div>
+      <div class="subj-meta"><span>2 units</span><span>0% complete</span></div></div><div class="subj-card" style="border-color: transparent;">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-anim)22; color:var(--c-anim);">🎬</div>
+        <div>
+          <div class="subj-name">Multimedia &amp; Animation</div>
+          <div class="subj-code">SEC · Credits 2</div>
+        </div>
+      </div>
+      <div class="subj-bar-track"><div class="subj-bar-fill" style="width:6%; background:var(--c-anim);"></div></div>
+      <div class="subj-meta"><span>2 units</span><span>6% complete</span></div></div></div>
+      <div class="subj-detail open" id="subjDetail"><h3 style="margin-bottom:12px;">🎬 Multimedia &amp; Animation — syllabus checklist</h3><div class="unit-block"><div class="unit-title" style="color:var(--c-anim)">Unit 1 — Introduction to Multimedia</div><div class="topic-row">
+        <button class="todo-check " data-ui="0" data-ti="0"></button>
+        <span class="topic-text">Introduction to multimedia, usage of multimedia</span>
+        <button class="ans-toggle" data-ans-ui="0" data-ans-ti="0">💡 Answer</button></div><div class="ans-panel" id="ans-0-0">Multimedia combines text, image, audio, video &amp; animation into one interactive experience, used in education, entertainment, marketing &amp; communication.</div><div class="topic-row">
+        <button class="todo-check " data-ui="0" data-ti="1"></button>
+        <span class="topic-text">Multimedia hardware — connections, memory &amp; storage, I/O &amp; communication devices</span>
+        <button class="ans-toggle" data-ans-ui="0" data-ans-ti="1">💡 Answer</button></div><div class="ans-panel" id="ans-0-1">Includes connections (cables/ports), memory/storage (RAM, drives), input/output devices (mic, speakers, display) and communication devices (network cards).</div><div class="topic-row">
+        <button class="todo-check " data-ui="0" data-ti="2"></button>
+        <span class="topic-text">Multimedia software — text editing, OCR, painting &amp; drawing tools</span>
+        <button class="ans-toggle" data-ans-ui="0" data-ans-ti="2">💡 Answer</button></div><div class="ans-panel" id="ans-0-2">Text editors &amp; word processors create content; OCR converts scanned text to editable text; painting/drawing tools create raster/vector graphics.</div><div class="topic-row">
+        <button class="todo-check " data-ui="0" data-ti="3"></button>
+        <span class="topic-text">3D modeling &amp; animation tools, image editing tools</span>
+        <button class="ans-toggle" data-ans-ui="0" data-ans-ti="3">💡 Answer</button></div><div class="ans-panel" id="ans-0-3">3D modeling tools (like Blender) build 3D objects/animations; image editing tools (like Photoshop/GIMP) edit and enhance raster images.</div><div class="topic-row">
+        <button class="todo-check " data-ui="0" data-ti="4"></button>
+        <span class="topic-text">Multimedia text — fonts &amp; faces, hypermedia &amp; hypertext</span>
+        <button class="ans-toggle" data-ans-ui="0" data-ans-ti="4">💡 Answer</button></div><div class="ans-panel" id="ans-0-4">Covers fonts &amp; typefaces, editing &amp; design tools, and hypertext/hypermedia — linked, non-linear text navigation.</div><div class="topic-row">
+        <button class="todo-check " data-ui="0" data-ti="5"></button>
+        <span class="topic-text">Multimedia image — source of images, light &amp; colors, file formats</span>
+        <button class="ans-toggle" data-ans-ui="0" data-ans-ti="5">💡 Answer</button></div><div class="ans-panel" id="ans-0-5">Covers image sources, the role of light &amp; color, and common file formats (JPEG, PNG, GIF, etc.).</div><div class="topic-row">
+        <button class="todo-check " data-ui="0" data-ti="6"></button>
+        <span class="topic-text">Multimedia sound — digital audio, MIDI, audio file formats</span>
+        <button class="ans-toggle" data-ans-ui="0" data-ans-ti="6">💡 Answer</button></div><div class="ans-panel" id="ans-0-6">Covers digital audio recording, MIDI (an instrument protocol vs recorded digital audio) and common audio file formats (MP3, WAV).</div><div class="topic-row">
+        <button class="todo-check " data-ui="0" data-ti="7"></button>
+        <span class="topic-text">Multimedia video — analog/digital video, file formats, shooting &amp; editing</span>
+        <button class="ans-toggle" data-ans-ui="0" data-ans-ti="7">💡 Answer</button></div><div class="ans-panel" id="ans-0-7">Covers analog vs digital video, common video file formats, and the basics of video shooting &amp; editing.</div></div><div class="unit-block"><div class="unit-title" style="color:var(--c-anim)">Unit 2 — Synfig Studio &amp; Animation Techniques</div><div class="topic-row">
+        <button class="todo-check " data-ui="1" data-ti="0"></button>
+        <span class="topic-text">Intro to Synfig Studio 2D animation software</span>
+        <button class="ans-toggle" data-ans-ui="1" data-ans-ti="0">💡 Answer</button></div><div class="ans-panel" id="ans-1-0">Synfig Studio is a free, open-source 2D vector animation software using keyframes and layers for smooth, scalable animation.</div><div class="topic-row">
+        <button class="todo-check " data-ui="1" data-ti="1"></button>
+        <span class="topic-text">Animation basics — timeline, workspace, keyframe panel, rendering</span>
+        <button class="ans-toggle" data-ans-ui="1" data-ans-ti="1">💡 Answer</button></div><div class="ans-panel" id="ans-1-1">The timeline sequences animation over time; the workspace holds the canvas &amp; tool panels; the keyframe panel manages key animation points.</div><div class="topic-row">
+        <button class="todo-check " data-ui="1" data-ti="2"></button>
+        <span class="topic-text">Interface — toolbox, canvas, panels, linking</span>
+        <button class="ans-toggle" data-ans-ui="1" data-ans-ti="2">💡 Answer</button></div><div class="ans-panel" id="ans-1-2">The toolbox holds drawing/editing tools; the canvas is the drawing area; panels (layers, params) manage object properties; linking connects parameters dynamically.</div><div class="topic-row">
+        <button class="todo-check " data-ui="1" data-ti="3"></button>
+        <span class="topic-text">Artwork construction — spline tool, outline layer, draw &amp; brush tool</span>
+        <button class="ans-toggle" data-ans-ui="1" data-ans-ti="3">💡 Answer</button></div><div class="ans-panel" id="ans-1-3">Spline tool draws smooth vector curves; outline layer defines shape borders; draw &amp; brush tool create freehand strokes.</div><div class="topic-row">
+        <button class="todo-check " data-ui="1" data-ti="4"></button>
+        <span class="topic-text">Gradient tool, text tool, width tool, blend method, masking</span>
+        <button class="ans-toggle" data-ans-ui="1" data-ans-ti="4">💡 Answer</button></div><div class="ans-panel" id="ans-1-4">Gradient tool applies color transitions; text tool adds typography; width tool varies line thickness; blend method controls layer compositing; masking hides/reveals parts of a layer.</div><div class="topic-row">
+        <button class="todo-check " data-ui="1" data-ti="5"></button>
+        <span class="topic-text">Adding &amp; combining layers</span>
+        <button class="ans-toggle" data-ans-ui="1" data-ans-ti="5">💡 Answer</button></div><div class="ans-panel" id="ans-1-5">Layers stack visual elements independently, letting animators combine and edit shapes, colors &amp; effects without affecting other layers.</div><div class="topic-row">
+        <button class="todo-check " data-ui="1" data-ti="6"></button>
+        <span class="topic-text">Slideshows, audio synchronization</span>
+        <button class="ans-toggle" data-ans-ui="1" data-ans-ti="6">💡 Answer</button></div><div class="ans-panel" id="ans-1-6">Synfig supports sequencing static images into slideshows and aligning animation timing with audio tracks.</div><div class="topic-row">
+        <button class="todo-check " data-ui="1" data-ti="7"></button>
+        <span class="topic-text">Keyframes — adding, duplicating, removing, reusing, onionskin, time loop layer</span>
+        <button class="ans-toggle" data-ans-ui="1" data-ans-ti="7">💡 Answer</button></div><div class="ans-panel" id="ans-1-7">Keyframes mark key animation states; onionskin shows adjacent frames as a guide; a time loop layer repeats a segment of animation automatically.</div><div class="topic-row">
+        <button class="todo-check " data-ui="1" data-ti="8"></button>
+        <span class="topic-text">Animation techniques — morphing, cut-out animation</span>
+        <button class="ans-toggle" data-ans-ui="1" data-ans-ti="8">💡 Answer</button></div><div class="ans-panel" id="ans-1-8">Morphing smoothly transforms one shape into another; cut-out animation moves pre-drawn parts (like paper puppets) to create motion.</div></div><button class="btn ghost close-detail">Close</button></div>
+    </section>
+
+    <!-- PLANNER -->
+    <section id="tab-planner" class="">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+        <div class="section-label" style="margin:0;">Weekly planner</div>
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+          <span style="font-size:12px; color:var(--text-faint);">Saved automatically · tap a day to add a block</span>
+          <button class="btn ghost" id="resetScheduleBtn" style="font-size:11.5px; padding:8px 12px;">↺ Reset to suggested plan</button>
+        </div>
+      </div>
+      <div class="week-grid" id="weekGrid"><div class="day-col"><div class="day-head"><span>Mon</span></div><div class="plan-item" style="border-left-color: var(--c-java);">
+        <span class="pi-time" data-day="Mon" data-id="4d8lgg7" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">5:00 PM · Unit walkthrough</span>
+        Java Programming
+        <button class="pi-del" data-day="Mon" data-id="4d8lgg7">✕</button></div><div class="plan-item" style="border-left-color: var(--c-os);">
+        <span class="pi-time" data-day="Mon" data-id="3ddh23m" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">7:00 PM · Concepts + notes</span>
+        Operating Systems
+        <button class="pi-del" data-day="Mon" data-id="3ddh23m">✕</button></div><button class="day-add">+ Add block</button></div><div class="day-col"><div class="day-head"><span>Tue</span><span class="mono" style="color:var(--lime); font-size:10px;">TODAY</span></div><div class="plan-item" style="border-left-color: var(--c-eng);">
+        <span class="pi-time" data-day="Tue" data-id="w0bdy73" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">5:00 PM · Reading + grammar</span>
+        English (AEC)
+        <button class="pi-del" data-day="Tue" data-id="w0bdy73">✕</button></div><div class="plan-item" style="border-left-color: var(--c-ecom);">
+        <span class="pi-time" data-day="Tue" data-id="qog9wjk" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">6:30 PM · Unit topics</span>
+        E-Commerce Tech
+        <button class="pi-del" data-day="Tue" data-id="qog9wjk">✕</button></div><button class="day-add">+ Add block</button></div><div class="day-col"><div class="day-head"><span>Wed</span></div><div class="plan-item" style="border-left-color: var(--c-java);">
+        <span class="pi-time" data-day="Wed" data-id="zetiu77" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">5:00 PM · Practice problems</span>
+        Java Programming
+        <button class="pi-del" data-day="Wed" data-id="zetiu77">✕</button></div><div class="plan-item" style="border-left-color: var(--c-iks);">
+        <span class="pi-time" data-day="Wed" data-id="5xl3y3n" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">6:30 PM · Reading</span>
+        Indian Knowledge System
+        <button class="pi-del" data-day="Wed" data-id="5xl3y3n">✕</button></div><button class="day-add">+ Add block</button></div><div class="day-col"><div class="day-head"><span>Thu</span></div><div class="plan-item" style="border-left-color: var(--c-os);">
+        <span class="pi-time" data-day="Thu" data-id="674k68r" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">5:00 PM · Numericals/scheduling</span>
+        Operating Systems
+        <button class="pi-del" data-day="Thu" data-id="674k68r">✕</button></div><div class="plan-item" style="border-left-color: var(--c-anim);">
+        <span class="pi-time" data-day="Thu" data-id="spct8dm" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">6:30 PM · Synfig practice</span>
+        Multimedia &amp; Animation
+        <button class="pi-del" data-day="Thu" data-id="spct8dm">✕</button></div><button class="day-add">+ Add block</button></div><div class="day-col"><div class="day-head"><span>Fri</span></div><div class="plan-item" style="border-left-color: var(--c-java);">
+        <span class="pi-time" data-day="Fri" data-id="reaegka" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">5:00 PM · Revision</span>
+        Java Programming
+        <button class="pi-del" data-day="Fri" data-id="reaegka">✕</button></div><div class="plan-item" style="border-left-color: var(--c-ecom);">
+        <span class="pi-time" data-day="Fri" data-id="8akdqae" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">6:30 PM · Revision</span>
+        E-Commerce Tech
+        <button class="pi-del" data-day="Fri" data-id="8akdqae">✕</button></div><button class="day-add">+ Add block</button></div><div class="day-col"><div class="day-head"><span>Sat</span></div><div class="plan-item" style="border-left-color: var(--c-iks);">
+        <span class="pi-time" data-day="Sat" data-id="ehflzi0" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">1:00 PM · Weekly revision</span>
+        Indian Knowledge System
+        <button class="pi-del" data-day="Sat" data-id="ehflzi0">✕</button></div><div class="plan-item" style="border-left-color: var(--c-os);">
+        <span class="pi-time" data-day="Sat" data-id="6gvwykp" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">10:00 AM · Weekly revision</span>
+        Operating Systems
+        <button class="pi-del" data-day="Sat" data-id="6gvwykp">✕</button></div><div class="plan-item" style="border-left-color: var(--c-eng);">
+        <span class="pi-time" data-day="Sat" data-id="fd1xsco" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">11:30 AM · Paragraph writing</span>
+        English (AEC)
+        <button class="pi-del" data-day="Sat" data-id="fd1xsco">✕</button></div><button class="day-add">+ Add block</button></div><div class="day-col"><div class="day-head"><span>Sun</span></div><div class="plan-item" style="border-left-color: var(--c-anim);">
+        <span class="pi-time" data-day="Sun" data-id="3yzxqee" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block&#39;s time manually">11:00 AM · Portfolio project time</span>
+        Multimedia &amp; Animation
+        <button class="pi-del" data-day="Sun" data-id="3yzxqee">✕</button></div><button class="day-add">+ Add block</button></div></div>
+    </section>
+
+    <!-- CAREER -->
+    <section id="tab-career" class="active">
+      <div class="career-hero">
+        <h2>Turn Sem 3 into a career head start</h2>
+        <p>Each subject builds a different muscle. Stack a small real-world action onto each one this semester and your resume writes itself by finals.</p>
+      </div>
+      <div class="career-grid" id="careerGrid"><div class="career-card">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-java)22; color:var(--c-java);">☕</div>
+        <div class="subj-name">Java Programming</div>
+      </div>
+      <ul><li>Build one small console or Android-style project using OOP concepts</li><li>Practice 2-3 DSA problems in Java weekly to prep for placements</li></ul></div><div class="career-card">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-os)22; color:var(--c-os);">🖥️</div>
+        <div class="subj-name">Operating Systems</div>
+      </div>
+      <ul><li>Explain scheduling algorithms out loud — it is a top interview topic</li><li>Simulate FCFS/Round Robin on paper to internalize trade-offs</li></ul></div><div class="career-card">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-eng)22; color:var(--c-eng);">✍️</div>
+        <div class="subj-name">English (AEC)</div>
+      </div>
+      <ul><li>Keep a habit of writing one 150-word paragraph a week for fluency</li><li>Use active/passive &amp; reported speech rules in your project reports</li></ul></div><div class="career-card">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-iks)22; color:var(--c-iks);">🕉️</div>
+        <div class="subj-name">Indian Knowledge System</div>
+      </div>
+      <ul><li>Connect one IKS topic to a modern parallel — great for interview small talk</li><li>Note down 3 references you could cite in a viva or seminar</li></ul></div><div class="career-card">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-ecom)22; color:var(--c-ecom);">🛒</div>
+        <div class="subj-name">E-Commerce Tech</div>
+      </div>
+      <ul><li>Map a real app (Amazon, Swiggy) to the payment &amp; security concepts learned</li><li>Understand IP rights — relevant if you ever ship your own product</li></ul></div><div class="career-card">
+      <div class="subj-top">
+        <div class="subj-icon" style="background:var(--c-anim)22; color:var(--c-anim);">🎬</div>
+        <div class="subj-name">Multimedia &amp; Animation</div>
+      </div>
+      <ul><li>Recreate one short animation in Synfig to add to your portfolio</li><li>Pair this with the Java unit — game/UI polish loves animation skills</li></ul></div></div>
+      <div class="card goals-box">
+        <div class="section-label">This semester's goals</div>
+        <div id="goalsList"><div class="empty-note">No goals yet — try "finish Java Unit 2" or "start Synfig project".</div></div>
+        <div class="add-row">
+          <input id="goalInput" placeholder="Add a goal…" maxlength="80">
+          <button class="btn" id="goalAddBtn">Add</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="bottom-nav" id="bottomNav"><button class="nav-btn active" data-tab="today"><span>🏠</span><span class="label">Today</span></button><button class="nav-btn" data-tab="subjects"><span>📚</span><span class="label">Subjects</span></button><button class="nav-btn" data-tab="planner"><span>🗓️</span><span class="label">Planner</span></button><button class="nav-btn" data-tab="career"><span>🚀</span><span class="label">Career</span></button></nav>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <h3 id="modalTitle">Add to planner</h3>
+    <label>Day</label>
+    <input id="mDay" disabled="">
+    <label>Time <span style="color:var(--text-faint); font-weight:400;">(edit freely, e.g. 6:00 PM)</span></label>
+    <input id="mTime" placeholder="e.g. 6:00 PM">
+    <label>Subject</label>
+    <select id="mSubject"></select>
+    <label>Note (optional)</label>
+    <input id="mNote" placeholder="e.g. revise Unit 2" maxlength="60">
+    <div class="modal-actions">
+      <button class="btn ghost" id="mDelete" style="display:none; color:var(--pink);">Delete block</button>
+      <button class="btn ghost" id="mCancel">Cancel</button>
+      <button class="btn" id="mSave">Save block</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Suggested schedule restored 🗓️</div>
+
+<script>
+/* ======================= DATA ======================= */
+const SUBJECTS = [
+  { id:'java', name:'Java Programming', code:'OOP · Credits 4', icon:'☕', color:'var(--c-java)',
+    units:[
+      {title:'Unit 1 — Java Basics & Arrays', topics:[
+        'OOP principles, Java essentials & JVM',
+        'Java features, program structure, Java vs C++, installing JDK',
+        'Variables, primitive data types, identifiers, literals, operators',
+        'Precedence, associativity, type conversion/casting, flow of control',
+        'Classes, objects — declaration & creating objects',
+        'Methods, constructors, cleaning up unused objects',
+        'Class variables & methods — static keyword, this keyword',
+        'Arrays (1D/2D), for-each with arrays, passing/returning arrays, command line args',
+      ]},
+      {title:'Unit 2 — Inheritance & Interface', topics:[
+        'Deriving classes using extends keyword',
+        'Overriding methods, super keyword, final keyword',
+        'Abstract classes',
+        'Variables in interfaces',
+        'Extending interfaces',
+        'Interface vs abstract class',
+      ]},
+      {title:'Unit 3 — Package, Wrapper, String, Exceptions', topics:[
+        'Creating & using packages, access protection, java.lang package',
+        'Wrapper classes',
+        'String class',
+        'StringBuffer class',
+        'Exception handling — introduction & techniques',
+        'User-defined exceptions',
+      ]},
+      {title:'Unit 4 — Multithreading', topics:[
+        'Introduction to multithreading, java.lang.Thread',
+        'Main thread, creation of new threads',
+        'Thread states, thread priority',
+        'Multithreading using isAlive() and join()',
+      ]},
+    ]},
+  { id:'os', name:'Operating Systems', code:'OS Concepts · Credits 4', icon:'🖥️', color:'var(--c-os)',
+    units:[
+      {title:'Unit 1 — Intro to OS & Memory Management', topics:[
+        'What is an operating system, OS software, types of OS',
+        'Memory management — single user contiguous scheme',
+        'Fixed partitions',
+        'Dynamic partitions — allocation & deallocation methods',
+        'Relocatable dynamic partitions',
+        'Paged memory allocation, demand paging',
+        'Page replacement algorithms — FIFO, LRU',
+        'Segmented memory allocation, segmented/demand-paged allocation',
+        'Virtual memory',
+      ]},
+      {title:'Unit 2 — Processor Management', topics:[
+        'Job scheduler, process scheduler',
+        'Job and process status',
+        'Process control block',
+        'Process scheduling policies',
+        'Scheduling algorithms — FCFS, SJN, Priority, SRT, Round Robin',
+      ]},
+      {title:'Unit 3 — Deadlock & Process Synchronization', topics:[
+        'Seven cases for deadlock',
+        'Conditions for deadlock',
+        'Strategies for handling deadlocks',
+        'Starvation — dining philosophers problem',
+        'Parallel processing, multiprocessing configurations',
+        'Process sync software — test & set, wait & signal',
+        'Semaphores',
+        'Process cooperation — producers & consumers',
+      ]},
+      {title:'Unit 4 — Device & File Management', topics:[
+        'Types of system devices, I/O subsystem components',
+        'Communication among devices',
+        'Management of I/O requests',
+        'Device handler seek strategies — FCFS, SSTF, Elevator (LOOK)',
+        'The file manager',
+        'Physical storage allocation',
+        'Data compression',
+        'Access control verification module',
+      ]},
+    ]},
+  { id:'eng', name:'English (AEC)', code:'Ability Enhancement', icon:'✍️', color:'var(--c-eng)',
+    units:[
+      {title:'Unit 1 — Glimpses of Infinity', topics:[
+        '"After Twenty Years" — O Henry',
+        '"The Magic Beard" — R K Narayan',
+        '"The Village School Master" — Oliver Goldsmith',
+      ]},
+      {title:'Unit 2 — Grammar & Writing', topics:[
+        'Subject-Verb concord',
+        'Active and Passive voice',
+        'Direct and Indirect speech',
+        'Prefixes and Suffixes',
+        'Synonyms and Antonyms',
+        'Paragraph writing (150–200 words)',
+        'Vocabulary — textual glossary',
+      ]},
+    ]},
+  { id:'iks', name:'Indian Knowledge System', code:'IKS · Credits 2', icon:'🕉️', color:'var(--c-iks)',
+    units:[
+      {title:'Unit 1 — Understanding of IKS', topics:[
+        'Unique aspects of IKS — IKS vs ideology, present-day perspective',
+        'Vocabulary related to IKS — Dharma, Sanatan, Moksha, Karma etc.',
+        'Science of Sastra — Shruti & Smriti Parampara',
+        'Methods to study Shastra',
+        'Overview of Shastrartha Parampara',
+        'Manuscriptology — script & Sanskrit language, its importance',
+        'Manuscripts — history, types & preservation techniques',
+        'Famous manuscript repositories',
+      ]},
+      {title:'Unit 2 — Contribution of IKS', topics:[
+        'Science & technology — astronomy',
+        'Encryption methods used in ancient India',
+        'Yantra Shastra — Vaimanik Shastra',
+        'Textile technologies',
+        'Agriculture technologies',
+        'Forest management & water management techniques',
+        'Trade & commerce — concept of Indic economy (Arth Vyavastha)',
+        'Administration & governance — concept & structure of Indic administration',
+        'Niti Sastra — law & order',
+        'Fine art & performing art — Bhav, Ras, types, process, famous artists',
+        'Case studies — local art & tradition',
+        'Experiential sessions — Ashtang Yog & Pranayam, mantra chanting',
+      ]},
+    ]},
+  { id:'ecom', name:'E-Commerce Tech', code:'IDC · Credits 2', icon:'🛒', color:'var(--c-ecom)',
+    units:[
+      {title:'Unit 1 — Intro, Security & Payment System', topics:[
+        'What is e-commerce, e-commerce vs e-business',
+        'Web 2.0, types of e-commerce, internet protocols & utility programs',
+        'Security threats — malicious code, unwanted programs, phishing, identity theft',
+        'Security threats — hacking, cyber vandalism, credit card fraud, spoofing, sniffing, insider attacks',
+        'Encryption — symmetric key & public key encryption',
+        'Hash digest, digital envelope, digital certificate',
+      ]},
+      {title:'Unit 2 — Payment System, Auctions & IP Rights', topics:[
+        'Digital cash & digital wallet',
+        'Online credit card transaction, stored value payment system',
+        'Digital accumulating balance payment system',
+        'Digital checking payment system, wireless payment system',
+        'Online auctions — introduction, defining & measuring growth',
+        'Dynamic pricing, benefits & cost of online auctions',
+        'Types of auctions (excluding market maker benefit)',
+        'Intellectual property rights',
+      ]},
+    ]},
+  { id:'anim', name:'Multimedia & Animation', code:'SEC · Credits 2', icon:'🎬', color:'var(--c-anim)',
+    units:[
+      {title:'Unit 1 — Introduction to Multimedia', topics:[
+        'Introduction to multimedia, usage of multimedia',
+        'Multimedia hardware — connections, memory & storage, I/O & communication devices',
+        'Multimedia software — text editing, OCR, painting & drawing tools',
+        '3D modeling & animation tools, image editing tools',
+        'Multimedia text — fonts & faces, hypermedia & hypertext',
+        'Multimedia image — source of images, light & colors, file formats',
+        'Multimedia sound — digital audio, MIDI, audio file formats',
+        'Multimedia video — analog/digital video, file formats, shooting & editing',
+      ]},
+      {title:'Unit 2 — Synfig Studio & Animation Techniques', topics:[
+        'Intro to Synfig Studio 2D animation software',
+        'Animation basics — timeline, workspace, keyframe panel, rendering',
+        'Interface — toolbox, canvas, panels, linking',
+        'Artwork construction — spline tool, outline layer, draw & brush tool',
+        'Gradient tool, text tool, width tool, blend method, masking',
+        'Adding & combining layers',
+        'Slideshows, audio synchronization',
+        'Keyframes — adding, duplicating, removing, reusing, onionskin, time loop layer',
+        'Animation techniques — morphing, cut-out animation',
+      ]},
+    ]},
+];
+
+const ANSWERS = {
+  java: [
+    [ // Unit 1
+      "OOP rests on encapsulation, inheritance, polymorphism & abstraction. Java is platform-independent because the JVM compiles code to bytecode that runs on any OS with a JVM installed.",
+      "Java is simple, secure, robust & multithreaded. Unlike C++, it has no pointers or multiple class inheritance. Install the JDK and set the PATH/JAVA_HOME variable to compile & run programs.",
+      "Java has 8 primitive types (byte, short, int, long, float, double, char, boolean). Identifiers name variables/methods; literals are fixed values; operators include arithmetic, relational, logical & assignment.",
+      "Operator precedence decides evaluation order; associativity decides left-to-right or right-to-left. Casting converts between types (widening is automatic, narrowing needs an explicit cast). Flow control = if/else, loops, switch.",
+      "A class is a blueprint; an object is its instance, created with `new`. Declaring a class defines fields & methods; creating an object allocates memory and calls a constructor.",
+      "Constructors initialize objects and share the class name with no return type. Methods define behavior. Unused objects are cleared automatically by Java's garbage collector.",
+      "`static` binds a variable/method to the class rather than an instance, shared across all objects. `this` refers to the current object, often used to resolve naming conflicts.",
+      "Arrays store fixed-size collections of same-type elements; 2D arrays are arrays of arrays. For-each simplifies iteration. Arrays can be passed to/returned from methods, and `args` in main() captures command-line input.",
+    ],
+    [ // Unit 2
+      "`extends` lets a subclass inherit fields & methods from a superclass, enabling code reuse and an IS-A relationship.",
+      "Overriding redefines a superclass method in a subclass with the same signature. `super` calls the parent's version; `final` prevents a method/class from being overridden or extended.",
+      "An abstract class can mix abstract (unimplemented) and concrete methods; it can't be instantiated directly and forces subclasses to implement its abstract methods.",
+      "Interface variables are implicitly `public static final` — i.e. constants shared across all implementing classes.",
+      "An interface can extend one or more other interfaces using `extends`, inheriting their abstract method declarations.",
+      "Interfaces only declare method signatures and support multiple inheritance; abstract classes can hold implemented methods/state but only support single inheritance.",
+    ],
+    [ // Unit 3
+      "Packages group related classes/interfaces under a namespace (e.g. `java.lang`), controlling access via public, protected, private and default modifiers.",
+      "Wrapper classes (Integer, Double, Character, etc.) let primitive types be treated as objects — essential for collections and autoboxing/unboxing.",
+      "`String` objects are immutable — every modification creates a new object, often stored in the string pool.",
+      "`StringBuffer` is mutable and thread-safe, useful for heavy string concatenation without creating multiple objects.",
+      "Exceptions are handled with try/catch/finally; `throw` raises one, `throws` declares it. Java has checked (compile-time) and unchecked (runtime) exceptions.",
+      "Custom exceptions extend `Exception` (checked) or `RuntimeException` (unchecked) to represent domain-specific error conditions.",
+    ],
+    [ // Unit 4
+      "Multithreading lets a program run multiple parts concurrently. The `Thread` class (or `Runnable` interface) is used to define and manage threads.",
+      "Every Java program starts with a main thread; new threads are created by extending `Thread` or implementing `Runnable` and calling `start()`.",
+      "Threads move through states — new, runnable, running, blocked/waiting, terminated. Priority (1–10) hints the scheduler on execution order.",
+      "`isAlive()` checks if a thread has finished executing; `join()` makes the calling thread wait until the target thread completes.",
+    ],
+  ],
+  os: [
+    [ // Unit 1
+      "An OS manages hardware & software resources and provides services to programs. Types include batch, multiprogramming, time-sharing, real-time, and distributed OS.",
+      "In single-user contiguous allocation, the entire memory (besides OS space) is given to one program at a time — simple but wastes memory.",
+      "Fixed partitioning divides memory into fixed-size blocks set at boot time; each process fits one partition, causing internal fragmentation.",
+      "Dynamic partitioning creates partitions sized exactly to each process on demand; allocation uses first-fit/best-fit/worst-fit, and deallocation frees the block back to the pool.",
+      "Relocatable partitions can be moved (compacted) in memory to combine free spaces and reduce external fragmentation.",
+      "Paging splits memory into fixed-size frames/pages; demand paging loads a page into memory only when it's actually referenced, saving memory.",
+      "FIFO replaces the oldest loaded page when memory is full; LRU replaces the page not used for the longest time — LRU usually performs better but costs more to track.",
+      "Segmentation divides a program into logical units (code, data, stack) of variable size; segmented/demand-paged combines segmentation's logical structure with paging's fixed frames.",
+      "Virtual memory lets programs use more memory than is physically available by swapping pages between RAM and disk, using paging/segmentation.",
+    ],
+    [ // Unit 2
+      "The job scheduler picks which jobs enter the system (long-term); the process scheduler decides which ready process runs on the CPU next (short-term).",
+      "A process moves through states — new, ready, running, waiting, terminated — tracked by the OS at all times.",
+      "The Process Control Block stores a process's state, program counter, registers, memory info & scheduling data — used to context-switch between processes.",
+      "Scheduling policies balance CPU utilization, throughput, turnaround time, waiting time & response time — implemented as preemptive or non-preemptive.",
+      "FCFS runs jobs in arrival order; SJN picks the shortest job next; Priority runs the highest-priority job first; SRT preempts for a shorter remaining job; Round Robin gives each process a fixed time slice cyclically.",
+    ],
+    [ // Unit 3
+      "The seven classic deadlock cases cover scenarios where multiple processes compete for shared/reusable/consumable resources in different sequences and combinations.",
+      "Deadlock requires 4 conditions together: mutual exclusion, hold-and-wait, no preemption, and circular wait.",
+      "Strategies: prevention (remove one of the 4 conditions), avoidance (Banker's algorithm), detection & recovery, or ignoring it entirely (ostrich algorithm).",
+      "Starvation is indefinite postponement of a process; the dining philosophers problem models resource contention & circular wait causing deadlock/starvation among concurrent processes.",
+      "Parallel processing runs multiple instructions simultaneously; multiprocessing configurations include master-slave, symmetric, and loosely/tightly coupled systems.",
+      "Test-and-set is an atomic hardware instruction used to build locks; wait & signal (P/V operations) coordinate processes around a shared resource.",
+      "A semaphore is a counter controlling access to shared resources — binary (mutex) or counting — using wait()/signal() operations.",
+      "The producer-consumer problem uses a shared buffer & semaphores so producers add and consumers remove items without race conditions or buffer overflow/underflow.",
+    ],
+    [ // Unit 4
+      "System devices are block (disks) or character (keyboard/printer) devices; the I/O subsystem includes device drivers, controllers & buffers connecting hardware to the OS.",
+      "Devices communicate via interrupts, DMA (direct memory access), or polling, coordinated by device controllers and drivers.",
+      "The OS queues, schedules and dispatches I/O requests to devices, often reordering them for efficiency.",
+      "FCFS serves I/O requests in order (simple, can be slow); SSTF picks the request closest to the current head position; Elevator/LOOK moves the head in one direction, servicing requests along the way, like an elevator.",
+      "The file manager handles file creation, naming, access permissions, and organizes file storage & directories.",
+      "Physical storage can be allocated as contiguous, linked, or indexed blocks — trading off speed, fragmentation & ease of growth.",
+      "Data compression reduces file size using algorithms like run-length encoding or Huffman coding, saving storage & transfer time.",
+      "Access control verification checks user/process permissions (read/write/execute) before allowing access to a file or device.",
+    ],
+  ],
+  eng: [
+    [ // Unit 1
+      "A story about two old friends who agree to meet after 20 years; a twist reveals one has become a wanted criminal and the other, now a policeman, sends someone else to arrest him rather than do it himself — exploring loyalty vs duty.",
+      "A gentle, satirical Malgudi-style story using the fantastical device of a 'magic beard' to explore vanity, transformation, and human folly with humor.",
+      "An excerpt from 'The Deserted Village' portraying a beloved, strict-but-kind village schoolteacher, admired despite his stern discipline — symbolizing traditional rural education and community respect for learning.",
+    ],
+    [ // Unit 2
+      "The verb must agree with its subject in number & person, e.g. 'She writes' (singular) vs 'They write' (plural).",
+      "Active voice: the subject performs the action ('The cat chased the mouse'). Passive voice: the subject receives the action ('The mouse was chased by the cat').",
+      "Direct speech quotes exact words ('He said, \"I am tired\"'); indirect speech reports them, shifting tense/pronouns ('He said he was tired').",
+      "Prefixes attach before a root word to change meaning (un-, re-, dis-); suffixes attach after (-ness, -ful, -tion) — both build vocabulary and shift word class.",
+      "Synonyms are words with similar meaning (happy/joyful); antonyms are opposites (happy/sad) — used to build vocabulary and improve writing variety.",
+      "A 150–200 word paragraph needs a clear topic sentence, supporting facts/arguments, and a logical, coherent flow to the concluding idea.",
+      "Refers to key/unfamiliar words drawn from the prescribed texts, with their meanings, used to strengthen reading comprehension and word usage.",
+    ],
+  ],
+  iks: [
+    [ // Unit 1
+      "Explores how Indian Knowledge Systems differ from Western frameworks — rooted in holistic, experiential and interconnected views of knowledge rather than a rigid ideology.",
+      "Key terms: Dharma (duty/righteousness), Sanatan (eternal/perennial), Moksha (liberation), Karma (action & its consequence) — foundational to Indian philosophy.",
+      "Shruti (heard/revealed knowledge, e.g. Vedas) and Smriti (remembered/composed texts, e.g. Smritis, Puranas) are the two broad categories of traditional Indian textual authority.",
+      "Traditional study involved oral transmission (guru-shishya parampara), memorization, debate (shastrartha), and commentary-based interpretation.",
+      "A tradition of structured scholarly debate used to test, refine and validate knowledge/arguments in ancient Indian academic culture.",
+      "Studies the scripts (Brahmi, Devanagari, etc.) and Sanskrit's role in preserving India's manuscript heritage.",
+      "Covers palm-leaf & birch-bark manuscripts, their historical evolution, and preservation techniques against decay, insects & climate.",
+      "Major repositories include institutions like the Bhandarkar Oriental Research Institute, National Mission for Manuscripts, and temple/matha archives preserving ancient texts.",
+    ],
+    [ // Unit 2
+      "Ancient Indian astronomy (Jyotisha) developed calendars and planetary computation — contributors include Aryabhata and Varahamihira.",
+      "Cryptographic techniques appear in ancient texts for secure communication, including cipher-like substitution methods described in classical literature.",
+      "A body of knowledge describing mechanical devices (yantras) and, controversially, ancient aviation concepts described in the Vaimanik Shastra text.",
+      "Ancient India was known for advanced weaving, natural dyeing and textile trade — e.g. muslin & Kalamkari techniques.",
+      "Traditional Indian agriculture used seasonal calendars, crop rotation, organic fertilization and water-efficient irrigation methods.",
+      "Traditional systems like stepwells, tanks (johads) and sacred groves reflect sustainable forest and water conservation practices.",
+      "Trade & commerce were structured around guilds (Shreni), barter and coinage systems, with texts like the Arthashastra outlining economic principles.",
+      "Ancient Indian administration had structured governance — village councils, ministers (Amatya), and regional administrative hierarchies.",
+      "The science of ethics & polity — texts like the Arthashastra and Panchatantra offer guidance on statecraft, law & order.",
+      "Bhav (emotion) and Ras (aesthetic essence) are core concepts in classical Indian performing arts as codified in the Natyashastra.",
+      "Examines specific regional art & craft traditions to understand how IKS principles manifest in living local practice.",
+      "Practical exposure to Ashtang Yog (eight-limbed yoga), Pranayam (breath control), and mantra chanting as embodied IKS practices.",
+    ],
+  ],
+  ecom: [
+    [ // Unit 1
+      "E-commerce is buying/selling goods/services online; e-business is the broader digital management of all business processes (including e-commerce).",
+      "Web 2.0 enabled interactive, user-generated commerce platforms. E-commerce types include B2B, B2C, C2C, C2B. Protocols like HTTP/HTTPS and TCP/IP enable secure data transfer.",
+      "Malicious code (viruses/worms) damages systems; phishing tricks users into revealing credentials via fake communications; identity theft steals personal data for fraud.",
+      "Hacking breaches systems; cyber vandalism defaces/disrupts sites; credit card fraud & spoofing (fake identity/website) deceive users; insider attacks come from within an organization.",
+      "Symmetric encryption uses one shared key to encrypt/decrypt (fast); public key uses a key pair (public to encrypt, private to decrypt), enabling secure exchange without sharing secrets.",
+      "A hash digest verifies data integrity; a digital envelope combines encrypted data with an encrypted key; a digital certificate verifies identity, issued by a trusted CA.",
+    ],
+    [ // Unit 2
+      "Digital cash represents currency value electronically; a digital wallet stores payment credentials/cash for quick online transactions.",
+      "Online credit card transactions authorize payment through gateways; stored value systems (like prepaid cards) hold pre-loaded funds for spending.",
+      "Users accrue charges over a period (like a utility or phone bill) and pay the accumulated balance periodically.",
+      "Digital checking mimics traditional checks electronically; wireless payment systems use mobile devices/NFC for contactless transactions.",
+      "Online auctions let buyers bid competitively for items; growth is driven by convenience, reach, and real-time price discovery.",
+      "Dynamic pricing adjusts prices based on demand/bidding; benefits include better price discovery and market efficiency, costs include complexity & potential buyer distrust.",
+      "Common types include English (ascending bid), Dutch (descending price), sealed-bid, and reverse auctions.",
+      "IP rights (copyright, trademark, patent) protect original digital content, brand identity & inventions from unauthorized use in e-commerce.",
+    ],
+  ],
+  anim: [
+    [ // Unit 1
+      "Multimedia combines text, image, audio, video & animation into one interactive experience, used in education, entertainment, marketing & communication.",
+      "Includes connections (cables/ports), memory/storage (RAM, drives), input/output devices (mic, speakers, display) and communication devices (network cards).",
+      "Text editors & word processors create content; OCR converts scanned text to editable text; painting/drawing tools create raster/vector graphics.",
+      "3D modeling tools (like Blender) build 3D objects/animations; image editing tools (like Photoshop/GIMP) edit and enhance raster images.",
+      "Covers fonts & typefaces, editing & design tools, and hypertext/hypermedia — linked, non-linear text navigation.",
+      "Covers image sources, the role of light & color, and common file formats (JPEG, PNG, GIF, etc.).",
+      "Covers digital audio recording, MIDI (an instrument protocol vs recorded digital audio) and common audio file formats (MP3, WAV).",
+      "Covers analog vs digital video, common video file formats, and the basics of video shooting & editing.",
+    ],
+    [ // Unit 2
+      "Synfig Studio is a free, open-source 2D vector animation software using keyframes and layers for smooth, scalable animation.",
+      "The timeline sequences animation over time; the workspace holds the canvas & tool panels; the keyframe panel manages key animation points.",
+      "The toolbox holds drawing/editing tools; the canvas is the drawing area; panels (layers, params) manage object properties; linking connects parameters dynamically.",
+      "Spline tool draws smooth vector curves; outline layer defines shape borders; draw & brush tool create freehand strokes.",
+      "Gradient tool applies color transitions; text tool adds typography; width tool varies line thickness; blend method controls layer compositing; masking hides/reveals parts of a layer.",
+      "Layers stack visual elements independently, letting animators combine and edit shapes, colors & effects without affecting other layers.",
+      "Synfig supports sequencing static images into slideshows and aligning animation timing with audio tracks.",
+      "Keyframes mark key animation states; onionskin shows adjacent frames as a guide; a time loop layer repeats a segment of animation automatically.",
+      "Morphing smoothly transforms one shape into another; cut-out animation moves pre-drawn parts (like paper puppets) to create motion.",
+    ],
+  ],
+};
+
+const CAREER_TIPS = {
+  java:['Build one small console or Android-style project using OOP concepts','Practice 2-3 DSA problems in Java weekly to prep for placements'],
+  os:['Explain scheduling algorithms out loud — it is a top interview topic','Simulate FCFS/Round Robin on paper to internalize trade-offs'],
+  eng:['Keep a habit of writing one 150-word paragraph a week for fluency','Use active/passive & reported speech rules in your project reports'],
+  iks:['Connect one IKS topic to a modern parallel — great for interview small talk','Note down 3 references you could cite in a viva or seminar'],
+  ecom:['Map a real app (Amazon, Swiggy) to the payment & security concepts learned','Understand IP rights — relevant if you ever ship your own product'],
+  anim:['Recreate one short animation in Synfig to add to your portfolio','Pair this with the Java unit — game/UI polish loves animation skills'],
+};
+
+const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+/* Default weekly plan — weighted so Java & OS (4 credits) get 3 slots/week,
+   English gets 2, and IKS / E-Commerce / Animation (2 credits each) get 2,
+   with Saturday as a lighter revision day and Sunday mostly free. */
+const DEFAULT_SCHEDULE = {
+  Mon:[
+    {time:'5:00 PM', subject:'java', note:'Unit walkthrough'},
+    {time:'7:00 PM', subject:'os',   note:'Concepts + notes'},
+  ],
+  Tue:[
+    {time:'5:00 PM', subject:'eng',  note:'Reading + grammar'},
+    {time:'6:30 PM', subject:'ecom', note:'Unit topics'},
+  ],
+  Wed:[
+    {time:'5:00 PM', subject:'java', note:'Practice problems'},
+    {time:'6:30 PM', subject:'iks',  note:'Reading'},
+  ],
+  Thu:[
+    {time:'5:00 PM', subject:'os',   note:'Numericals/scheduling'},
+    {time:'6:30 PM', subject:'anim', note:'Synfig practice'},
+  ],
+  Fri:[
+    {time:'5:00 PM', subject:'java', note:'Revision'},
+    {time:'6:30 PM', subject:'ecom', note:'Revision'},
+  ],
+  Sat:[
+    {time:'10:00 AM', subject:'os',   note:'Weekly revision'},
+    {time:'11:30 AM', subject:'eng',  note:'Paragraph writing'},
+    {time:'1:00 PM',  subject:'iks',  note:'Weekly revision'},
+  ],
+  Sun:[
+    {time:'11:00 AM', subject:'anim', note:'Portfolio project time'},
+  ],
+};
+
+/* ======================= STATE ======================= */
+let progress = {};   // { subjectId: { unitIdx: [bool,...] } }
+let schedulePlan = {}; // { Mon:[{id,time,subject,note}], ... }
+let todos = [];       // [{id,text,done}]
+let goals = [];        // [{id,text,done}]
+let streak = { count:0, lastDate:null };
+let activeSubject = null;
+
+const subjMap = Object.fromEntries(SUBJECTS.map(s=>[s.id,s]));
+
+/* ======================= STORAGE HELPERS ======================= */
+async function loadAll(){
+  progress = await safeGet('progress', {});
+  schedulePlan = await safeGet('schedulePlan', null);
+  todos = await safeGet('todos', []);
+  goals = await safeGet('goals', []);
+  streak = await safeGet('streak', {count:0, lastDate:null});
+
+  if(!schedulePlan){
+    schedulePlan = seedSchedule();
+    await save('schedulePlan', schedulePlan);
+  }
+}
+function seedSchedule(){
+  const plan = {};
+  DAYS.forEach(day=>{
+    plan[day] = (DEFAULT_SCHEDULE[day]||[]).map(b=>({id:uid(), ...b}));
+  });
+  return plan;
+}
+async function safeGet(key, fallback){
+  try{
+    const raw = localStorage.getItem('s3hq_'+key);
+    return raw ? JSON.parse(raw) : fallback;
+  }catch(e){ return fallback; }
+}
+async function save(key, value){
+  try{ localStorage.setItem('s3hq_'+key, JSON.stringify(value)); }
+  catch(e){ console.error('save failed', key, e); showToast('⚠️ Could not save — storage blocked'); }
+}
+
+/* ======================= UTIL ======================= */
+function uid(){ return Math.random().toString(36).slice(2,9); }
+function todayKey(){ return DAYS[(new Date().getDay()+6)%7]; } // Mon=0
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t=setTimeout(()=>t.classList.remove('show'),1600);
+}
+function bumpStreak(){
+  const today = new Date().toDateString();
+  if(streak.lastDate === today) return;
+  const yesterday = new Date(Date.now()-86400000).toDateString();
+  streak.count = (streak.lastDate === yesterday) ? streak.count+1 : 1;
+  streak.lastDate = today;
+  save('streak', streak);
+  renderHeader();
+}
+
+/* ======================= NAV ======================= */
+const TABS = [
+  {id:'today', icon:'🏠', label:'Today'},
+  {id:'subjects', icon:'📚', label:'Subjects'},
+  {id:'planner', icon:'🗓️', label:'Planner'},
+  {id:'career', icon:'🚀', label:'Career'},
+];
+function buildNav(container, showLogo){
+  container.innerHTML='';
+  if(showLogo){
+    const logo=document.createElement('div');
+    logo.className='logo-mark'; logo.textContent='S3';
+    container.appendChild(logo);
+  }
+  TABS.forEach(t=>{
+    const b=document.createElement('button');
+    b.className='nav-btn'+(t.id==='today'?' active':'');
+    b.dataset.tab=t.id;
+    b.innerHTML=`<span>${t.icon}</span><span class="label">${t.label}</span>`;
+    b.onclick=()=>switchTab(t.id);
+    container.appendChild(b);
+  });
+  if(showLogo){
+    const foot=document.createElement('div');
+    foot.className='sidebar-bottom'; foot.textContent='built for sem 3';
+    container.appendChild(foot);
+  }
+}
+function switchTab(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===id));
+}
+
+/* ======================= HEADER ======================= */
+function renderHeader(){
+  const now = new Date();
+  const opts = {weekday:'long', month:'long', day:'numeric'};
+  document.getElementById('dateLine').textContent = now.toLocaleDateString('en-US', opts);
+  const h = now.getHours();
+  const greeting = h<12 ? 'Good morning' : h<17 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('greetTitle').textContent = `${greeting} 👋`;
+  document.getElementById('streakNum').textContent = streak.count || 0;
+}
+
+/* ======================= TODAY TAB ======================= */
+function renderToday(){
+  const wrap = document.getElementById('todaySchedule');
+  const blocks = (schedulePlan[todayKey()]||[]).slice().sort((a,b)=>a.time.localeCompare(b.time));
+  wrap.innerHTML='';
+  if(!blocks.length){
+    wrap.innerHTML = `<div class="empty-note">Nothing scheduled today. Add blocks from the Planner tab →</div>`;
+  } else {
+    blocks.forEach(b=>{
+      const s = subjMap[b.subject];
+      const row=document.createElement('div');
+      row.className='block-row';
+      row.innerHTML=`
+        <span class="block-time">${b.time}</span>
+        <span class="block-dot" style="background:${s?s.color:'#888'}"></span>
+        <span class="block-subj">${s?s.name:b.subject}</span>
+        <span class="block-note">${b.note||''}</span>`;
+      wrap.appendChild(row);
+    });
+  }
+  renderTodos();
+}
+function renderTodos(){
+  const wrap = document.getElementById('todoList');
+  wrap.innerHTML='';
+  if(!todos.length){
+    wrap.innerHTML = `<div class="empty-note">No tasks yet. What are you tackling today?</div>`;
+    return;
+  }
+  todos.forEach(t=>{
+    const row=document.createElement('div');
+    row.className='todo-item';
+    const remindLbl = t.remindAt ? `<span class="mono" style="font-size:10px; color:var(--text-faint); margin-left:6px;">🔔 ${new Date(t.remindAt).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</span>` : '';
+    row.innerHTML=`
+      <button class="todo-check ${t.done?'done':''}" data-id="${t.id}">${t.done?'✓':''}</button>
+      <span class="todo-text ${t.done?'done':''}">${escapeHtml(t.text)}${remindLbl}</span>
+      <button class="todo-del" data-id="${t.id}">✕</button>`;
+    wrap.appendChild(row);
+  });
+  wrap.querySelectorAll('.todo-check').forEach(btn=>{
+    btn.onclick=()=>{
+      const item = todos.find(x=>x.id===btn.dataset.id);
+      item.done = !item.done;
+      if(item.done) bumpStreak();
+      save('todos', todos);
+      renderTodos();
+    };
+  });
+  wrap.querySelectorAll('.todo-del').forEach(btn=>{
+    btn.onclick=()=>{
+      todos = todos.filter(x=>x.id!==btn.dataset.id);
+      save('todos', todos);
+      renderTodos();
+    };
+  });
+}
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ======================= SUBJECTS TAB ======================= */
+function subjPct(s){
+  const p = progress[s.id] || {};
+  let total=0, done=0;
+  s.units.forEach((u,ui)=>{
+    total += u.topics.length;
+    done += (p[ui]||[]).filter(Boolean).length;
+  });
+  return total? Math.round(done/total*100) : 0;
+}
+function renderSubjects(){
+  const constel = document.getElementById('constellation');
+  const grid = document.getElementById('subjGrid');
+  constel.innerHTML=''; grid.innerHTML='';
+
+  SUBJECTS.forEach(s=>{
+    const pct = subjPct(s);
+    const r=26, c=2*Math.PI*r;
+    const off = c - (pct/100)*c;
+    const ring=document.createElement('div');
+    ring.className='ring-item';
+    ring.innerHTML=`
+      <svg width="64" height="64" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="${r}" stroke="rgba(255,255,255,0.08)" stroke-width="6" fill="none"/>
+        <circle cx="32" cy="32" r="${r}" stroke="${s.color}" stroke-width="6" fill="none"
+          stroke-dasharray="${c}" stroke-dashoffset="${off}" stroke-linecap="round"
+          transform="rotate(-90 32 32)" style="transition:stroke-dashoffset .5s ease"/>
+        <text x="32" y="37" text-anchor="middle" font-size="15" fill="white">${s.icon}</text>
+      </svg>
+      <div class="ring-label">${s.name.split(' ')[0]}</div>
+      <div class="ring-pct">${pct}%</div>`;
+    constel.appendChild(ring);
+
+    const card=document.createElement('div');
+    card.className='subj-card';
+    card.style.borderColor='transparent';
+    card.onclick=()=>openSubject(s.id);
+    card.innerHTML=`
+      <div class="subj-top">
+        <div class="subj-icon" style="background:${s.color}22; color:${s.color};">${s.icon}</div>
+        <div>
+          <div class="subj-name">${s.name}</div>
+          <div class="subj-code">${s.code}</div>
+        </div>
+      </div>
+      <div class="subj-bar-track"><div class="subj-bar-fill" style="width:${pct}%; background:${s.color};"></div></div>
+      <div class="subj-meta"><span>${s.units.length} units</span><span>${pct}% complete</span></div>`;
+    grid.appendChild(card);
+  });
+
+  if(activeSubject) renderSubjectDetail(activeSubject);
+}
+function openSubject(id){
+  activeSubject = (activeSubject===id) ? null : id;
+  renderSubjectDetail(activeSubject);
+}
+function renderSubjectDetail(id){
+  const wrap = document.getElementById('subjDetail');
+  if(!id){ wrap.classList.remove('open'); wrap.innerHTML=''; return; }
+  const s = subjMap[id];
+  const p = progress[id] || (progress[id]={});
+  wrap.classList.add('open');
+  wrap.innerHTML = `<h3 style="margin-bottom:12px;">${s.icon} ${s.name} — syllabus checklist</h3>`;
+  s.units.forEach((u,ui)=>{
+    const doneArr = p[ui] || (p[ui]=new Array(u.topics.length).fill(false));
+    const block=document.createElement('div');
+    block.className='unit-block';
+    block.innerHTML = `<div class="unit-title" style="color:${s.color}">${u.title}</div>`;
+    u.topics.forEach((topic,ti)=>{
+      const row=document.createElement('div');
+      row.className='topic-row'+(doneArr[ti]?' done':'');
+      const ans = (ANSWERS[id] && ANSWERS[id][ui] && ANSWERS[id][ui][ti]) || '';
+      row.innerHTML=`
+        <button class="todo-check ${doneArr[ti]?'done':''}" data-ui="${ui}" data-ti="${ti}">${doneArr[ti]?'✓':''}</button>
+        <span class="topic-text">${topic}</span>
+        ${ans? `<button class="ans-toggle" data-ans-ui="${ui}" data-ans-ti="${ti}">💡 Answer</button>` : ''}`;
+      block.appendChild(row);
+      if(ans){
+        const panel=document.createElement('div');
+        panel.className='ans-panel';
+        panel.id=`ans-${ui}-${ti}`;
+        panel.textContent = ans;
+        block.appendChild(panel);
+      }
+    });
+    wrap.appendChild(block);
+  });
+  const closeBtn=document.createElement('button');
+  closeBtn.className='btn ghost close-detail';
+  closeBtn.textContent='Close';
+  closeBtn.onclick=()=>{ activeSubject=null; renderSubjectDetail(null); };
+  wrap.appendChild(closeBtn);
+
+  wrap.querySelectorAll('.ans-toggle').forEach(btn=>{
+    btn.onclick=(e)=>{
+      e.stopPropagation();
+      const panel = document.getElementById(`ans-${btn.dataset.ansUi}-${btn.dataset.ansTi}`);
+      const open = panel.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.textContent = open ? '💡 Hide' : '💡 Answer';
+    };
+  });
+
+  wrap.querySelectorAll('.todo-check').forEach(btn=>{
+    btn.onclick=(e)=>{
+      e.stopPropagation();
+      const ui=btn.dataset.ui, ti=+btn.dataset.ti;
+      p[ui][ti] = !p[ui][ti];
+      if(p[ui][ti]) bumpStreak();
+      save('progress', progress);
+      renderSubjectDetail(id);
+      renderSubjects();
+    };
+  });
+}
+
+/* ======================= PLANNER TAB ======================= */
+function renderPlanner(){
+  const grid = document.getElementById('weekGrid');
+  grid.innerHTML='';
+  DAYS.forEach(day=>{
+    const col=document.createElement('div');
+    col.className='day-col';
+    const items = (schedulePlan[day]||[]).slice().sort((a,b)=>a.time.localeCompare(b.time));
+    col.innerHTML = `<div class="day-head"><span>${day}</span>${day===todayKey()?'<span class="mono" style="color:var(--lime); font-size:10px;">TODAY</span>':''}</div>`;
+    items.forEach(it=>{
+      const s = subjMap[it.subject];
+      const pi=document.createElement('div');
+      pi.className='plan-item';
+      pi.style.borderLeftColor = s?s.color:'var(--violet)';
+      pi.innerHTML=`
+        <span class="pi-time" data-day="${day}" data-id="${it.id}" style="cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;" title="Click to edit this block's time manually">${it.time}${it.note? ' · '+escapeHtml(it.note):''}</span>
+        ${s?s.name:it.subject}
+        <button class="pi-del" data-day="${day}" data-id="${it.id}">✕</button>`;
+      col.appendChild(pi);
+    });
+    const addBtn=document.createElement('button');
+    addBtn.className='day-add';
+    addBtn.textContent='+ Add block';
+    addBtn.onclick=()=>openModal(day);
+    col.appendChild(addBtn);
+    grid.appendChild(col);
+  });
+  grid.querySelectorAll('.pi-del').forEach(btn=>{
+    btn.onclick=()=>{
+      const day=btn.dataset.day;
+      schedulePlan[day] = (schedulePlan[day]||[]).filter(x=>x.id!==btn.dataset.id);
+      save('schedulePlan', schedulePlan);
+      renderPlanner(); renderToday();
+    };
+  });
+  grid.querySelectorAll('.pi-time').forEach(span=>{
+    span.onclick=()=>{
+      const day=span.dataset.day, id=span.dataset.id;
+      const item = (schedulePlan[day]||[]).find(x=>x.id===id);
+      if(item) openModal(day, item);
+    };
+  });
+}
+function openModal(day, editItem){
+  document.getElementById('mDay').value = day;
+  document.getElementById('mTime').value = editItem ? editItem.time : '';
+  document.getElementById('mNote').value = editItem ? (editItem.note||'') : '';
+  const sel = document.getElementById('mSubject');
+  sel.innerHTML = SUBJECTS.map(s=>`<option value="${s.id}">${s.icon} ${s.name}</option>`).join('');
+  if(editItem) sel.value = editItem.subject;
+  document.getElementById('modalTitle').textContent = editItem ? 'Edit block' : 'Add to planner';
+  document.getElementById('mSave').textContent = editItem ? 'Save changes' : 'Save block';
+  document.getElementById('mDelete').style.display = editItem ? 'inline-block' : 'none';
+  document.getElementById('modalBackdrop').classList.add('open');
+  document.getElementById('modalBackdrop').dataset.day = day;
+  document.getElementById('modalBackdrop').dataset.editId = editItem ? editItem.id : '';
+}
+function closeModal(){ document.getElementById('modalBackdrop').classList.remove('open'); }
+
+/* ======================= CAREER TAB ======================= */
+function renderCareer(){
+  const grid = document.getElementById('careerGrid');
+  grid.innerHTML='';
+  SUBJECTS.forEach(s=>{
+    const card=document.createElement('div');
+    card.className='career-card';
+    card.innerHTML=`
+      <div class="subj-top">
+        <div class="subj-icon" style="background:${s.color}22; color:${s.color};">${s.icon}</div>
+        <div class="subj-name">${s.name}</div>
+      </div>
+      <ul>${CAREER_TIPS[s.id].map(t=>`<li>${t}</li>`).join('')}</ul>`;
+    grid.appendChild(card);
+  });
+  renderGoals();
+}
+function renderGoals(){
+  const wrap = document.getElementById('goalsList');
+  wrap.innerHTML='';
+  if(!goals.length){
+    wrap.innerHTML = `<div class="empty-note">No goals yet — try "finish Java Unit 2" or "start Synfig project".</div>`;
+    return;
+  }
+  goals.forEach(g=>{
+    const row=document.createElement('div');
+    row.className='todo-item';
+    row.innerHTML=`
+      <button class="todo-check ${g.done?'done':''}" data-id="${g.id}">${g.done?'✓':''}</button>
+      <span class="todo-text ${g.done?'done':''}">${escapeHtml(g.text)}</span>
+      <button class="todo-del" data-id="${g.id}">✕</button>`;
+    wrap.appendChild(row);
+  });
+  wrap.querySelectorAll('.todo-check').forEach(btn=>{
+    btn.onclick=()=>{
+      const g = goals.find(x=>x.id===btn.dataset.id);
+      g.done=!g.done;
+      if(g.done){ bumpStreak(); showToast('Goal smashed 🎯'); }
+      save('goals', goals); renderGoals();
+    };
+  });
+  wrap.querySelectorAll('.todo-del').forEach(btn=>{
+    btn.onclick=()=>{
+      goals = goals.filter(x=>x.id!==btn.dataset.id);
+      save('goals', goals); renderGoals();
+    };
+  });
+}
+
+/* ======================= EVENTS ======================= */
+function wireEvents(){
+  document.getElementById('todoAddBtn').onclick=()=>{
+    const inp=document.getElementById('todoInput');
+    const remindInp=document.getElementById('todoRemind');
+    if(!inp.value.trim())return;
+    const remindAt = remindInp.value ? new Date(remindInp.value).getTime() : null;
+    todos.push({id:uid(), text:inp.value.trim(), done:false, remindAt, notified:false});
+    inp.value=''; remindInp.value='';
+    save('todos', todos); renderTodos();
+  };
+  document.getElementById('todoInput').addEventListener('keydown', e=>{
+    if(e.key==='Enter') document.getElementById('todoAddBtn').click();
+  });
+
+  document.getElementById('goalAddBtn').onclick=()=>{
+    const inp=document.getElementById('goalInput');
+    if(!inp.value.trim())return;
+    goals.push({id:uid(), text:inp.value.trim(), done:false});
+    inp.value='';
+    save('goals', goals); renderGoals();
+  };
+  document.getElementById('goalInput').addEventListener('keydown', e=>{
+    if(e.key==='Enter') document.getElementById('goalAddBtn').click();
+  });
+
+  document.getElementById('resetScheduleBtn').onclick=()=>{
+    schedulePlan = seedSchedule();
+    save('schedulePlan', schedulePlan);
+    renderPlanner(); renderToday();
+    showToast('Suggested schedule restored 🗓️');
+  };
+
+  document.getElementById('mCancel').onclick=closeModal;
+  document.getElementById('modalBackdrop').addEventListener('click', e=>{
+    if(e.target.id==='modalBackdrop') closeModal();
+  });
+  document.getElementById('mSave').onclick=()=>{
+    const day = document.getElementById('modalBackdrop').dataset.day;
+    const editId = document.getElementById('modalBackdrop').dataset.editId;
+    const time = document.getElementById('mTime').value.trim();
+    const subject = document.getElementById('mSubject').value;
+    const note = document.getElementById('mNote').value.trim();
+    if(!time){ showToast('Add a time first'); return; }
+    schedulePlan[day] = schedulePlan[day]||[];
+    if(editId){
+      const idx = schedulePlan[day].findIndex(x=>x.id===editId);
+      if(idx>-1) schedulePlan[day][idx] = {...schedulePlan[day][idx], time, subject, note};
+      showToast('Block time updated ✏️');
+    } else {
+      schedulePlan[day].push({id:uid(), time, subject, note});
+      showToast('Block added ✨');
+    }
+    save('schedulePlan', schedulePlan);
+    closeModal();
+    renderPlanner(); renderToday();
+  };
+  document.getElementById('mDelete').onclick=()=>{
+    const day = document.getElementById('modalBackdrop').dataset.day;
+    const editId = document.getElementById('modalBackdrop').dataset.editId;
+    schedulePlan[day] = (schedulePlan[day]||[]).filter(x=>x.id!==editId);
+    save('schedulePlan', schedulePlan);
+    closeModal();
+    renderPlanner(); renderToday();
+    showToast('Block deleted 🗑️');
+  };
+
+  /* ---- Reminders / notifications ---- */
+  const notifBtn = document.getElementById('notifBtn');
+  updateNotifBtn();
+  notifBtn.onclick=async ()=>{
+    if(!('Notification' in window)){ showToast('Notifications not supported in this browser'); return; }
+    if(Notification.permission === 'granted'){
+      showToast('Reminders already on 🔔');
+      return;
+    }
+    const perm = await Notification.requestPermission();
+    updateNotifBtn();
+    showToast(perm==='granted' ? 'Reminders turned on 🔔' : 'Notifications blocked — enable in browser settings');
+  };
+}
+function updateNotifBtn(){
+  const notifBtn = document.getElementById('notifBtn');
+  if(!notifBtn) return;
+  const on = ('Notification' in window) && Notification.permission === 'granted';
+  notifBtn.textContent = on ? '🔔 Reminders: On' : '🔔 Reminders: Off';
+}
+
+/* Parse a "5:00 PM" style string into a Date object for today */
+function parseTimeToday(timeStr){
+  const m = /^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i.exec((timeStr||'').trim());
+  if(!m) return null;
+  let h = parseInt(m[1],10);
+  const min = parseInt(m[2],10);
+  const ap = (m[3]||'').toUpperCase();
+  if(ap==='PM' && h!==12) h+=12;
+  if(ap==='AM' && h===12) h=0;
+  const d = new Date();
+  d.setHours(h, min, 0, 0);
+  return d;
+}
+const REMINDER_LEAD_MIN = 10; // notify this many minutes before a scheduled block
+let notifiedBlocksToday = {}; // {`${day}-${id}`: dateString} reset each day
+
+function checkReminders(){
+  if(!('Notification' in window) || Notification.permission !== 'granted') return;
+  const now = Date.now();
+  const todayStr = new Date().toDateString();
+
+  // Task reminders (exact time, any date)
+  todos.forEach(t=>{
+    if(t.done || !t.remindAt || t.notified) return;
+    if(now >= t.remindAt && now < t.remindAt + 2*60000){
+      new Notification('📌 Task reminder', { body: t.text });
+      t.notified = true;
+      save('todos', todos);
+    }
+  });
+
+  // Schedule block reminders (lead time before today's blocks)
+  const blocks = schedulePlan[todayKey()] || [];
+  blocks.forEach(b=>{
+    const key = `${todayKey()}-${b.id}`;
+    if(notifiedBlocksToday[key] === todayStr) return;
+    const t = parseTimeToday(b.time);
+    if(!t) return;
+    const diffMin = (t.getTime() - now) / 60000;
+    if(diffMin <= REMINDER_LEAD_MIN && diffMin > REMINDER_LEAD_MIN - 1){
+      const s = subjMap[b.subject];
+      new Notification('🗓️ Study block starting soon', { body: `${s?s.name:b.subject} at ${b.time}${b.note? ' · '+b.note:''}` });
+      notifiedBlocksToday[key] = todayStr;
+    }
+  });
+}
+
+/* ======================= INIT ======================= */
+async function init(){
+  buildNav(document.getElementById('sidebarNav'), true);
+  buildNav(document.getElementById('bottomNav'), false);
+  renderHeader();
+  await loadAll();
+  renderHeader();
+  renderToday();
+  renderSubjects();
+  renderPlanner();
+  renderCareer();
+  wireEvents();
+  checkReminders();
+  setInterval(checkReminders, 30000);
+}
+init();
+</script>
+
+
+</body></html>
